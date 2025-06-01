@@ -13,12 +13,10 @@ Este proyecto nace para **restaurar y mejorar** esa funcionalidad mientras el po
 
 ---
 
-## ✨ Créditos
+## 🤝 Créditos
 
 - **Repositorio original del proyecto:**  
   [MigMatos/BecasBJ-Website](https://github.com/MigMatos/BecasBJ-Website)
-
-- **Desarrollador de esta versión:** [Miguel Ruiz Zamora]
 
 - **Basado en el trabajo de:** [MigMatos](https://github.com/MigMatos)
 
