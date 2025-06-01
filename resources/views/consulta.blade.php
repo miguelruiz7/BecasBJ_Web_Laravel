@@ -80,12 +80,6 @@
     <main class="form-signin w-100 m-auto">
         @include('componentes.notificaciones')
 
-        {{-- <nav class="navbar sticky-top fixed-top bg-dark rounded-pill m-3 navbar-secundario" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand mx-auto d-block" href="#"><i class="fa-solid fa-calendar-days"></i></a>
-            </div>
-        </nav> --}}
-
         <img src="{{ asset('img/banner1.jpg')}}" class="card-img-top img-fluid d-block mx-auto m-3" style="width: 100%;"
             alt="...">
         <h3 class="text-center">Consulta</h3>
@@ -93,6 +87,8 @@
             <div class="card-header">
                 Este sitio web <strong>NO ES OFICIAL</strong> y <strong>NO SUPLANTA</strong> al buscador de estatus
                 oficial.
+
+                <p><strong class="text-danger">NOTA:</strong> Por restricciones de baneo se limita a <strong> 2</strong> consultas por día, asi que usa sabiamente</p>
             </div>
             <div class="card-body">
                 <form id="consultar">
