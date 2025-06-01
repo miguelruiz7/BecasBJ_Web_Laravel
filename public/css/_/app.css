@@ -1,0 +1,343 @@
+/* =======================
+   Fuentes - Montserrat
+======================= */
+/* Montserrat - Black */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+/* Montserrat - Bold */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* Montserrat - ExtraBold */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+/* Montserrat - ExtraLight */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-ExtraLightItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+}
+
+/* Montserrat - Italic (Regular) */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Montserrat - Light */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Montserrat - Medium */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+/* Montserrat - Regular */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Montserrat - SemiBold */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Montserrat - Thin */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fuentes/Montserrat/static/Montserrat-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+
+/* Otros estilos de la fuente se mantienen aquí, ordenados por peso */
+
+/* =======================
+   Variables
+======================= */
+:root {
+    --c1_primario: #691B31;
+    --c1_secundario: #DDC9A3;
+    --c1_terciario: #98989A;
+
+    --c2_primario: #A02142;
+    --c2_secundario: #BC955B;
+    --c2_terciario: #6F7271;
+
+    --c_gradiente_primario: linear-gradient(45deg, var(--n1_primario), var(--n1_secundario));
+    --c_gradiente_secundario: linear-gradient(90deg, var(--n1_secundario), var(--n1_terciario));
+    --c_gradiente_terciario: linear-gradient(135deg, var(--n2_primario), var(--n2_secundario), var(--n2_terciario));
+}
+
+/* =======================
+   General
+======================= */
+html, body.principal {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-style: 'light';
+}
+
+header, footer {
+  /*   height: 14%; */
+   /*  background-color: var(--c2_primario); */
+    flex-shrink: 0;
+}
+
+/* =======================
+   Fondos y Paneles
+======================= */
+/* html,  */body#accesoPanel, body#registroPanel {
+    height: 100%;
+    background-image: url('/img/fondo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+}
+
+body#accesoPanel::before,  body#registroPanel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 0;
+}
+
+.menulateral {
+    background-color: var(--c1_primario);
+}
+
+/* =======================
+   Botones
+======================= */
+button#btnEnviar, a#btnEnviar,
+button#btnCafe, a#btnCafe {
+    background-color: var(--c2_secundario);
+}
+
+button#btnGris, a#btnGris {
+    background-color: var(--c1_terciario);
+}
+
+button#btnMenu:hover, a#btnMenu:hover {
+    background-color: var(--c2_secundario);
+}
+
+button#btnMenuNivel1:hover, a#btnMenuNivel1:hover {
+    background-color: color-mix(in srgb, var(--c2_secundario) 30%, transparent);
+    transition: background-color 0.3s ease;
+}
+
+/* =======================
+   Formularios
+======================= */
+.form-signin {
+    max-width: 330px;
+    padding: 1rem;
+    z-index: 2;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.input-group {
+    border: solid;
+    border-color: var(--c1_primario);
+}
+
+.borde {
+    border: solid;
+    border-color: var(--c1_primario);
+}
+
+i#iconFormularios {
+    color: var(--c2_terciario);
+}
+
+/* =======================
+   Textos y Estilos
+======================= */
+.texto {
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    color: var(--c1_primario);
+}
+
+.titulo {
+    font-family: 'Montserrat';
+    font-weight: 700;
+    font-size: calc(1.4rem + 0.6vw);
+    color: var(--c1_primario);
+}
+
+.subtitulo {
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: calc(1.3rem + 0.6vw);
+    color: var(--c1_primario);
+}
+
+.parrafo {
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    color: var(--c1_secundario);
+}
+
+/* Menus */
+
+.mtitulo{
+    font-family: 'Montserrat';
+    font-size: 1.0rem;
+    font-weight: 700;
+    /* margin-bottom: 1rem; */
+}
+
+.msubtitulo{
+
+}
+
+.menlace{
+    font-family: 'Montserrat';
+    font-size: 0.9rem;
+    font-weight: 300;
+    /* margin-bottom: 1rem; */
+}
+
+
+
+/* =======================
+   Otros Estilos
+======================= */
+#logoOrganizacion {
+    background-image: url(../img/Logotipo1.png);
+    background-size: contain;
+    background-position: center;
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    height: 6vh;
+    border: none !important;
+    outline: none;
+    padding: 0;
+}
+
+.contenedorMenu{
+   background-color: color-mix(in srgb, var(--c2_primario) 45%, transparent);
+}
+
+.contenedorMenuPrimario{
+    background-color: color-mix(in srgb, var(--c1_primario) 45%, transparent);
+    border-radius: 10px;
+ }
+ 
+
+.bordetitulos {
+    border-bottom: 4px solid var(--c2_secundario);
+}
+
+#t_encabezado {
+    background-color: var(--c1_secundario) !important;
+    color: var(--c1_secundario);
+}

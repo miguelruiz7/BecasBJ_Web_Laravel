@@ -1,0 +1,697 @@
+/*----------ESTILO DEL BODY----------*/
+.body1 {
+    background-color: #FFFAFA;
+    font-family: 'Montserrat';
+}
+/*----------BARRA DE NAVEGACION----------*/
+.logo-nav {
+    margin: 15px 17px 17px 17px;
+}
+@media (max-width: 768px) { 
+    .logo-nav {
+        margin: 8px 15px 8px 10px;
+    }
+}
+/* .offcanvas-body ul li:hover {
+     background-color: var(--c2_secundario);  
+    cursor: pointer;
+} */
+
+
+button.btnDesplegable:hover {
+    background-color: var(--c1_primario);  
+    cursor: pointer;
+}
+
+button.btnEnlace:hover {
+    background-color: var(--c2_secundario);  
+    cursor: pointer;
+}
+
+.offcanvas-body ul li i {
+    color: #ffffff; 
+}
+.offcanvas-body ul li span {
+    color: #ffffff; 
+    font-family: 'Montserrat';
+    font-weight: 400;
+}
+.menu1 {
+    margin: 2% 8% 2% 8%;
+}
+.menu1 li {
+    margin-bottom: 5%;
+}
+.logo-menu {
+    margin: 10% 0 7% 7%;
+}
+.logo-ceaa {
+    height: 40px; 
+    transition: all 0.3s ease; 
+}
+@media (max-width: 768px) { 
+    .logo-ceaa {
+        height: 25px; 
+    }
+}
+.responsive-icon {
+    font-size: 1.3rem;
+    transition: font-size 0.3s ease; 
+}
+@media (max-width: 768px) { 
+    .responsive-icon {
+        font-size: 1rem; 
+    }
+}
+.custom-offcanvas {
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+    overflow: hidden;
+    width: 370px !important; 
+}
+.btn-close-custom {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-close-custom i {
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+.btn-close-custom:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: rotate(90deg);
+}
+/*----------BARRA DE NAVEGACION----------*/
+
+/*----------ESTILO DEL TITULO PRINCIPAL----------*/
+.titulo-organismos {
+    font-family: 'Montserrat';
+    font-weight: 700; 
+    font-size: 1.5rem;
+    color: var(--c1_primario); 
+}
+@media (max-width: 768px) {
+    .titulo-organismos {
+        font-size: 1.2rem;
+    }
+}
+.linea {
+    width: 100%;
+    height: 2px; 
+    background-color: var(--c2_secundario); 
+}
+.titulo-container {
+    text-align: left; 
+    margin-bottom: 2rem; 
+}
+/*----------ESTILO DEL TITULO PRINCIPAL----------*/
+
+/*---------ESTILO DE LAS TARJETAS DEL MODULO 'Organismos Operadores'-----------*/
+.card-operadores {
+    background-color: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-style: none;
+    margin: 0 5% 4% 5%;
+    padding: 5% 5% 5% 5%;
+}
+.card-operadores:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+.icon-container {
+    width: 60px;
+    height: 60px;
+    background-color: #DDC9A3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    flex-shrink: 0; 
+}
+.icon-container i {
+    color: #ffffff;
+    font-size: 1.5rem;
+    flex-shrink: 0; 
+}
+.titulo-card {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #000000;
+    margin: 0;
+}
+/*---------ESTILO DE LAS TARJETAS DEL MODULO 'Organismos Operadores'-----------*/
+
+
+/*-----------ESTILO DE LA TABLA DEL MODULO 'Operadores Municipales'----------*/
+.table-om {
+    margin-bottom: 0;
+}
+.table-om th {
+    font-size: 1rem;
+    color: var(--c2_primario);
+    font-weight: 700;
+}
+.table-om td {
+    font-size: 0.9rem;
+    padding: 1rem;
+    border-bottom: 1px solid #E0E0E0;
+}
+@media (max-width: 768px) {
+    .responsive-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; 
+    }
+}
+.responsive-table {
+  position: relative;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-hint{
+    text-align: end;
+    margin-bottom: 8px;
+}
+
+.espacio-om{
+    margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .scroll-hint {
+    display: none;
+  }
+}
+
+
+
+/*-----------ESTILO DE LA TABLA DEL MODULO 'Operadores Municipales'----------*/
+
+
+/*----------ESTILO DEL MODULO 'om_actopan'---------*/
+.row1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.col-9 {
+    flex: 9;
+}
+
+.col-3 {
+    flex: 3;
+    text-align: right;
+}
+
+.titulo-organismos11 {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: calc(1.2rem + 0.4vw);
+    color: var(--c1_primario);
+}
+
+.titulo-organismos1 {
+    font-size: calc(1rem + 0.2vw);
+    font-weight: 700;
+    color: #000;
+    text-transform: uppercase;
+    margin-top: 0.5%;
+}
+
+.titulo-organismos2 {
+    font-size: calc(1rem + 0.2vw);
+    font-weight: 700;
+    color: var(--c1_primario); 
+    text-transform: uppercase;
+    margin-top: 0.5%;
+}
+
+.espaciol{
+    margin: 5px 0 10px 0;
+}
+
+.img1a {
+    max-height: 50px;
+}
+
+.espacio1{
+    margin-top: 3%;
+    
+}
+
+.cards1 {
+    margin: 0 3%;
+    height: 270px;
+    padding: 18% 7% 2% 7%;
+    text-align: center;
+    align-items: center;
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.4s ease;
+    cursor: pointer;
+}
+
+.cards1:hover {
+    transform: scale(1.05); /* agranda un poco la tarjeta */
+    box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+.icon-container_om-a {
+    width: 20vw;  
+    max-width: 120px; 
+    height: 20vw; 
+    max-height: 120px;
+    background-color: var(--c2_secundario);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-container_om-a  i {
+    color: white;
+    font-size: 3vw;
+}
+
+.footer-bar {
+    position: fixed;
+    bottom: 0; 
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color:var(--c1_primario);
+
+}
+.texto-card1 {
+    margin-top: 3vh; 
+    font-weight: 600;
+    font-size: clamp(14px, 4vw, 22px); 
+}
+
+@media (max-width: 600px) {
+    .texto-card1 {
+        font-size: 14px; 
+        text-align: center; 
+    }
+}
+
+@media (max-width: 900px) {
+    .icon-container_om-a  {
+        width: 60px;
+        height: 60px;
+    }
+
+    .icon-container_om-a i {
+        font-size: 24px;
+    }
+    .titulo-organismos11 {
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: calc(1.1rem + 0.4vw);
+        color: var(--c1_primario);
+    }
+    
+    .titulo-organismos1 {
+        font-size: calc(0.8rem + 0.2vw);
+        font-weight: 700;
+        color: #000;
+        text-transform: uppercase;
+        margin-top: 0.5%;
+    }
+    
+    .titulo-organismos2 {
+        font-size: calc(0.8rem + 0.2vw);
+        font-weight: 700;
+        color: var(--c1_primario); 
+        text-transform: uppercase;
+        margin-top: 0.5%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .icon-container_om-a {
+        width: 100px;
+        height: 100px;
+    }
+
+    .icon-container_om-a  i {
+        font-size: 32px;
+    }
+    .texto-card1 {
+        font-size: 17px; 
+    }
+}
+
+@media (max-width: 1200px) {
+    .espacio1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 25%;
+    }
+
+    .espacio1 .col-md-2 {
+        width: 100%; 
+        max-width: 600px;
+        margin-bottom: 15px; 
+    }
+
+    .cards1 {
+        margin: 0 1% 0 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        padding: 15px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .icon-container_om-a  {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        background-color: var(--c2_secundario);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+    }
+
+    .icon-container_om-a  i {
+        font-size: 22px;
+    }                
+
+    .texto-card1 {
+        font-size: 16px;
+        margin-top: 0;
+        text-align: left;
+        font-weight: 600;
+    }
+}
+
+@media (min-width: 767px) and (max-width: 1200px) {
+    .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centra los elementos en la lista */
+    }
+
+    .col-md-2 {
+        width: 100%; /* Ocupar todo el ancho */
+        max-width: 600px; /* Limita el ancho para que no sea muy grande */
+        margin-bottom: 15px; /* Espacio entre tarjetas */
+    }
+
+    .cards1 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 15px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+    }
+
+    .icon-container_om-a {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        margin-right: 15px; /* Espacio entre icono y texto */
+    }
+
+    .texto-card1 {
+        font-size: 16px;
+        text-align: left;
+        font-weight: 600;
+    }
+}
+
+
+/*----------ESTILO DEL MODULO 'om_actopan'---------*/
+
+
+/*---------MODULO DIRECTORIO GENERAL 'dg-actopan'----------*/
+.titulo1nav{
+    color: var(--c2_primario);
+    font-weight: 700;
+    font-size: x-large;   
+}
+.titulo-directoriogeneral {
+    font-weight: 600;
+    font-size: calc(1.1rem + 0.4vw);
+    color: var(--c1_primario);
+}
+
+.table-container-dg {
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid #eee;
+    padding: 10px;
+    margin-top: 1.5%;
+}
+.custom-table-dg {
+    width: 100%;
+    border-collapse: collapse;
+}
+.custom-th-dg, .custom-td-dg {
+    padding: 14px 18px;
+    text-align: left;
+}
+.custom-th-dg {
+    background: white;
+    color: var(--c2_primario);
+    text-transform: uppercase;
+    font-weight: 600;
+    border-bottom: 2px solid #eee;
+}
+.custom-tr-dg {
+    border-bottom: 1px solid #eee;
+}
+.custom-tr-dg:last-child {
+    border-bottom: none;
+}
+.custom-tr-dg:nth-child(even) {
+    background: #fdfdfd;
+}
+.icon-header-dg {
+    margin-right: 8px;
+    color: var(--c2_primario);
+}
+.espacio-dg{
+    margin-top: 3.5%;
+}
+
+/* Ocultar las tarjetas en escritorio */
+.custom-card-dg {
+    display: none;
+}
+
+.imagen-responsiva {
+    width: 100%;
+    height: auto;
+    max-width: 700px; /* Ajusta según necesidad */
+    display: block;
+    margin: 0 auto; /* Centrar la imagen */
+}
+
+
+
+@media (max-width: 992px) {
+
+    .titulo1nav {
+        font-size: large; 
+    }
+
+    .titulo-directoriogeneral {
+        font-size: calc(1rem + 0.2vw); 
+    }
+
+    .table-container-dg {
+        padding: 6px;
+        margin-top: 2%;
+        border-radius: 10px;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .custom-table-dg {
+        font-size: 0.85rem; /* texto más pequeño */
+    }
+
+    .custom-th-dg, .custom-td-dg {
+        padding: 10px 12px; /* menos espacio */
+    }
+
+    .custom-th-dg {
+        font-size: 0.8rem;
+    }
+
+    .custom-tr-dg:nth-child(even) {
+        background: #fafafa;
+    }
+
+    .icon-header-dg {
+        margin-right: 6px;
+        font-size: 0.9rem;
+    }
+
+    .espacio-dg {
+        margin-top: 2.5%;
+    }
+
+    .imagen-responsiva {
+        max-width: 100%;
+    }
+}
+
+
+.row1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.boton-agregar{
+    text-align: right;
+    padding: 5px 0 5px 7px;
+}
+.boton-agregar1 {
+    color: #fff !important;
+    background-color: var(--c2_secundario) !important;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 5px;
+}
+
+.boton-agregar1:hover {
+    background-color: var(--c2_secundario);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.boton-agregar1:active {
+    background-color: var(--c2_secundario);
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transform: scale(0.98);
+}
+
+.boton-agregar1:focus {
+    color: #fff !important;
+    background-color: var(--c2_secundario) !important;
+    box-shadow: 0 0 0 3px rgba(140, 140, 152, 0.449); 
+}
+@media (max-width: 768px) {
+    .boton-agregar1 {
+        padding: 4px 10px;
+        font-size: 12px;
+        border-radius: 3px;
+    }
+}
+
+.img1a {
+    max-height: 50px;
+}
+@media (max-width: 768px) {
+    .img1a {
+        max-height: 30px;
+    }
+}
+
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: var(--c2_primario); 
+    outline: none; 
+}
+
+
+
+.custom-dropdown {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+    background-color: #fcfbfb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    min-width: 120px;
+    border: none;
+}
+
+.custom-dropdown li {
+    text-align: left;
+}
+
+.custom-dropdown button {
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 6px;
+}
+
+.custom-dropdown button:hover {
+    background-color: var(--c2_primario);
+    color: white;
+}
+
+.custom-dropdown button:hover .icono-o {
+    color: white;
+}
+.custom-dropdown button:hover .icono-o2 {
+    color: white;
+}
+
+.custom-dropdown hr {
+    margin: 0.25rem 0;
+    border: none;
+    border-top: 1px solid #75777d;
+}
+
+.icono-o {
+    color: var(--c1_secundario);
+}
+
+.esp1{
+    padding: 2% 2% 2% 2%;
+}
