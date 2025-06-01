@@ -82,7 +82,8 @@
 
         <img src="{{ asset('img/banner1.jpg')}}" class="card-img-top img-fluid d-block mx-auto m-3" style="width: 100%;"
             alt="...">
-        <h3 class="text-center">Consulta</h3>
+       {{--  <h3 class="text-center">Consulta</h3> --}}
+       <p class="display-6 text-center">Consulta</p>
         <div class="card">
             <div class="card-header">
                 Este sitio web <strong>NO ES OFICIAL</strong> y <strong>NO SUPLANTA</strong> al buscador de estatus
@@ -143,6 +144,9 @@
         </div>
 
 
+        <div id="spinner-overlay" style="display: none;">
+  <div class="spinner"></div>
+</div>
 
 
         @include('componentes.pie')

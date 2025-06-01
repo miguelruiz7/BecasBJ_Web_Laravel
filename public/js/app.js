@@ -129,6 +129,7 @@ function hacerPeticion(url_, datos, contenedor) {
 */
 function cargarClases(clase = null, camposExc = []) {
   $('#btnEnviar').prop('disabled', true);
+  $('#spinner-overlay').show(); // 👉 Mostrar el spinner
 
   const formulario = clase ? $(`#${clase}`) : $('form');
   const formularioCheck = formulario.attr('id');
@@ -139,6 +140,9 @@ function cargarClases(clase = null, camposExc = []) {
     const formData = new FormData(formulario[0]);
     const urlFinal = `${baseUrl.replace(/\/$/, '')}/func/${formularioCheck}`;
 
+    limpiarCampos(formularioCheck);
+    $('#detallesBecario').html('');
+
     $.ajax({
       url: urlFinal,
       type: 'POST',
@@ -146,15 +150,14 @@ function cargarClases(clase = null, camposExc = []) {
       processData: false,
       contentType: false,
       success: (response) => {
+        $('#spinner-overlay').hide(); // 👉 Ocultar el spinner
+
         if (response.success) {
           revertirFormulario();
-          limpiarCampos(formularioCheck);
 
           if (response.vista) {
-            
             $('#detallesBecario').html(response.vista);
             $('#btnEnviar').prop('disabled', false);
-
           } else {
             console.warn('No se recibió una vista válida:', response);
           }
@@ -166,11 +169,13 @@ function cargarClases(clase = null, camposExc = []) {
         }
       },
       error: (error) => {
+        $('#spinner-overlay').hide(); // 👉 Ocultar el spinner
         $('#btnEnviar').prop('disabled', false);
         muestraMensajes(erroresPagina(error.status));
       },
     });
   } else {
+    $('#spinner-overlay').hide(); // 👉 Ocultar en caso de error
     $('#btnEnviar').prop('disabled', false);
     alert('No se encontró el formulario.');
   }

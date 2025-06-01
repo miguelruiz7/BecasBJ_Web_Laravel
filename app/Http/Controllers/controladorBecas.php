@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use GuzzleHttp\Client;
 
 class controladorBecas extends Controller
 {
@@ -88,7 +89,7 @@ class controladorBecas extends Controller
         $ctrlUtilerias->validarFormulario($peticion, $reglas, $mensajes);
 
         $curp = $peticion->txtCURP;
-        return $this->buscarBecarioAPI($curp, 1);
+        return $this->buscarBecarioAPI($curp);
     }
 
 
@@ -108,89 +109,85 @@ class controladorBecas extends Controller
      * 
      * @author Miguel Ruiz Zamora <miguelruizzamora7@gmail.com>
      */
+   
+
     public function buscarBecarioAPI($curp, $pruebas = 0)
-    {
-        $apoyos = catalogos::PROGRAMAS;
-        $json = null;
+{
+    $apoyos = catalogos::PROGRAMAS;
+    $json = null;
 
-        try {
-            if ($pruebas == 1) {
-                // Modo pruebas: leer el archivo JSON local
-                $path = public_path('metadatos/becario.json');
+    try {
+        if ($pruebas == 1) {
 
-                if (!file_exists($path)) {
-                    return response()->json([
-                        'success' => false,
-                        'mensaje' => 'Archivo becario.json no encontrado.',
-                    ], 404);
-                }
+            $path = public_path('metadatos/' . $curp . '_becario.json');
 
-                $contenido = file_get_contents($path);
-                $json = json_decode($contenido);
+            if (!file_exists($path)) {
+                throw new \Exception( 'Archivo ' . $curp . '_becario.json no encontrado.');
+            }
 
-                if (json_last_error() !== JSON_ERROR_NONE) {
-                    return response()->json([
-                        'success' => false,
-                        'mensaje' => 'El contenido del archivo no es un JSON válido.',
-                    ], 400);
-                }
+            $contenido = file_get_contents($path);
+            $json = json_decode($contenido);
 
-                $modo = '(Pruebas)';
-            } else {
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new \Exception('El contenido del archivo no es un JSON válido.');
+            }
 
-                $response = Http::asForm()->post('https://buscador.becasbenitojuarez.gob.mx/consulta/metodos/wrapper.php', [
-                    'CURP' => $curp,
-                    'habilitar' => 1,
-                ]);
+            $modo = '(Pruebas)';
+        } else {
+            $response = Http::asForm()->post('https://buscador.becasbenitojuarez.gob.mx/consulta/metodos/wrapper.php', [
+                'CURP' => $curp,
+                'habilitar' => 1,
+            ]);
 
-                if (!$response->successful()) {
-                    return response()->json([
-                        'success' => false,
-                        'mensaje' => 'Error consultando la beca.',
-                    ], $response->status());
-                }
-
-                $json = json_decode($response);
-
-                if ($json === null || $response->body() === 'null') {
-                    return response()->json([
-                        'success' => false,
-                        'mensaje' => 'No se encontraron datos para la CURP proporcionada.',
-                    ], 404);
-                }
-
-                $modo = '';
+            if (!$response->successful()) {
+                throw new \Exception('Error consultando la beca.');
             }
 
 
-            $emisionesPorAnio = $this->procesarEmisiones($json);
+            
+
+            $json = json_decode($response);
+
+            if ($json === null || $response->body() === 'null' || $json->status === 422) {
+                throw new \Exception('No se encontraron datos para la CURP proporcionada.');
+            }
+
+            $modo = '';
+        }
+
+        $emisionesPorAnio = $this->procesarEmisiones($json);
 
 
-            if ($pruebas == 0) {
+           /*  if ($pruebas == 0) {
                 // Guardar consulta
                 $registro = new query();
                 $registro->query_id = uniqid();
                 $registro->query_curp = $curp;
                 $registro->query_tmp = date('Y-m-d H:i:s');
                 $registro->save();
-            }
+            } */
 
-            return response()->json([
-                'success' => true,
-                'vista' => view('detalles', [
-                    'json' => $json,
-                    'emisionesPorAnio' => $emisionesPorAnio,
-                    'apoyos' => $apoyos,
-                ])->render(),
-                'mensaje' => 'Datos cargados exitosamente. ' . $modo . '',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'mensaje' => 'Excepción: ' . $e->getMessage(),
-            ], 500);
-        }
+
+        return response()->json([
+            'success' => true,
+            'vista' => view('detalles', [
+                'json' => $json,
+                'emisionesPorAnio' => $emisionesPorAnio,
+                'apoyos' => $apoyos,
+            ])->render(),
+            'mensaje' => 'Datos cargados exitosamente. ' . $modo,
+        ]);
+    } catch (\Exception $e) {
+      
+        $mensaje = $e->getMessage();
+
+        return response()->json([
+            'success' => false,
+            'mensaje' => $mensaje,
+        ], 200);
     }
+}
+
 
     /**
      * Procesa la información de emisiones de pagos del becario agrupándola por año y número de emisión.
@@ -266,4 +263,46 @@ class controladorBecas extends Controller
 
         return $emisionesPorAnio;
     }
+
+
+
+/* function consultarCurp(string $curp): array
+{
+    $url = "https://www.gob.mx/v1/renapoCURP/consulta";
+    $headers = [
+        'Host' => 'www.gob.mx',
+        'Accept' => 'application/json',
+        'Accept-Encoding' => 'gzip, deflate, br',
+        'Referer' => 'https://www.gob.mx/',
+        'Content-Type' => 'application/json',
+        'Connection' => 'keep-alive',
+    ];
+
+    $payload = [
+        "curp" => $curp,
+        "tipoBusqueda" => "curp"
+    ];
+
+    $client = new Client();
+
+    try {
+        $response = $client->post($url, [
+            'headers' => $headers,
+            'json' => $payload,
+        ]);
+
+        $data = json_decode($response->getBody(), true);
+
+        if (($data['codigo'] ?? '') !== "01") {
+            return ['success' => false, 'message' => $data['mensaje'] ?? 'Error desconocido'];
+        }
+
+        return ['success' => true, 'data' => $data['registros'][0] ?? null];
+
+    } catch (\Exception $e) {
+        return ['success' => false, 'message' => $e->getMessage()];
+    }
+}
+ */
+
 }
