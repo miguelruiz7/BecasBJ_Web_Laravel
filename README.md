@@ -1,15 +1,15 @@
-# 📚 Portal Alternativo de Consulta de Becas Benito Juárez versión alternativa (Laravel)
+# 📚 Portal Alternativo de Consulta de Becas Benito Juárez (versión Laravel)
 
-> **⚠️ Aviso importante:**  
+> ⚠️ **Aviso importante:**  
 > Este **NO es un sitio oficial del Gobierno de México**.  
-> Es una herramienta comunitaria creada porque el portal oficial de la Coordinación Nacional de Becas Benito Juárez (CNBBJ) entró en mantenimiento y dejó sin información a nuevas y nuevos becarios sobre tarjetas, citas y pagos.
+> Es una herramienta comunitaria creada para apoyar a nuevas y nuevos becarios mientras el portal oficial de la Coordinación Nacional de Becas Benito Juárez (CNBBJ) está en mantenimiento y sin información sobre tarjetas, citas o pagos.
 
 ---
 
 ## ✨ ¿Por qué existe este repositorio?
 
-Cuando el sitio oficial quedó fuera de servicio, muchas personas se quedaron sin acceso a datos esenciales.  
-Este proyecto nace para **restaurar y mejorar** esa funcionalidad mientras el portal gubernamental vuelve a estar disponible.
+Cuando el sitio oficial dejó de estar disponible, muchas personas se quedaron sin acceso a datos importantes.  
+Este proyecto nace para **ayudar de forma temporal** a recuperar esa información mientras el portal gubernamental vuelve a funcionar.
 
 ---
 
@@ -18,12 +18,12 @@ Este proyecto nace para **restaurar y mejorar** esa funcionalidad mientras el po
 - **Repositorio original del proyecto:**  
   [MigMatos/BecasBJ-Website](https://github.com/MigMatos/BecasBJ-Website)
 
-- **Basado en el trabajo de:** [MigMatos](https://github.com/MigMatos)
+- **Basado en el trabajo de:**  
+  [MigMatos](https://github.com/MigMatos)
+
+> Este proyecto se inspira y extiende el trabajo original. ¡Gracias por compartirlo con la comunidad!
 
 ---
-
-> Este proyecto se inspira y extiende el trabajo original. Todo el crédito por la base del sistema es para su autor original. ¡Gracias por compartirlo con la comunidad!
-
 
 ## 🔧 Instalación rápida
 
