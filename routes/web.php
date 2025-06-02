@@ -8,6 +8,12 @@ Route::get('/', function () {
 });
 
 
+Route::get('consulta', function () {
+    return view('alterna');
+});
+
+
+
 Route::get('consultarCurp/{CURP}', [controladorBecas::class, 'consultarCurp']);
 
 Route::group(['prefix' => '/func',], function () {

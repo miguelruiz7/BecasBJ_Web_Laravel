@@ -1,3 +1,20 @@
+ document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+                const tag = event.target.tagName.toLowerCase();
+                if (tag !== 'textarea' && tag !== 'button') {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        const curpInput = document.getElementById('txtCURP');
+        if (curpInput) {
+            curpInput.addEventListener('input', function(e) {
+                e.target.value = e.target.value.toUpperCase();
+            });
+        }
+    });
 
 /**
  * Carga una página o contenido dinámicamente en un contenedor específico del DOM.

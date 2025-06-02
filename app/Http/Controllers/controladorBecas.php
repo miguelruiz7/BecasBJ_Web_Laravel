@@ -72,7 +72,7 @@ class controladorBecas extends Controller
 
         $reglas = [
             'txtCURP' => 'required|min:18|max:18|validacurp|limitecurp',
-            /* 'h-captcha-response' => 'required|validar_captcha' */
+            'h-captcha-response' => 'required|validar_captcha'
         ];
 
 
@@ -81,7 +81,7 @@ class controladorBecas extends Controller
             'txtCURP.validacurp' => 'El formato de CURP es incorrecto',
             'txtCURP.limitecurp' => 'Agotastes tus consultas, vuelve mañana',
             'txtCURP.max' => 'Deben ser :max dígitos como máximo',
-            'txtCURP.min' => 'Deben ser :max dígitos como mínimo',
+            'txtCURP.min' => 'Deben ser :min dígitos como mínimo',
             'validar_captcha' => 'Captcha inválido, recarga el captcha de nuevo'
         ];
 

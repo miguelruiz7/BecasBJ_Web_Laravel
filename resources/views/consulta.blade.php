@@ -82,14 +82,15 @@
 
         <img src="{{ asset('img/banner1.jpg')}}" class="card-img-top img-fluid d-block mx-auto m-3" style="width: 100%;"
             alt="...">
-       {{--  <h3 class="text-center">Consulta</h3> --}}
-       <p class="display-6 text-center">Consulta</p>
+        {{-- <h3 class="text-center">Consulta</h3> --}}
+        <p class="display-6 text-center">Consulta</p>
         <div class="card">
             <div class="card-header">
                 Este sitio web <strong>NO ES OFICIAL</strong> y <strong>NO SUPLANTA</strong> al buscador de estatus
                 oficial.
 
-                <p><strong class="text-danger">NOTA:</strong> Por restricciones de baneo se limita a <strong> 2</strong> consultas por día, asi que usa sabiamente</p>
+                <p><strong class="text-danger">NOTA:</strong> Por restricciones de baneo se limita a <strong> 2</strong>
+                    consultas por día, asi que usa sabiamente</p>
             </div>
             <div class="card-body">
                 <form id="consultar">
@@ -101,7 +102,11 @@
                         <div class="input-group  rounded-3">
                             <span class="input-group-text" id="basic-addon3"><i id="iconFormularios"
                                     class="fa-solid fa-address-card"></i></span>
-                            <input class="form-control" name="txtCURP" id="txtCURP" type="text">
+                            <input class="form-control" name="txtCURP" id="txtCURP" type="text"
+                                pattern="^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]\d$"
+                                title="Formato CURP inválido. Ejemplo: GODE561231HDFABC09" maxlength="18"
+                                minlength="18">
+
                         </div>
 
                         @include('componentes.validacion', ['campo' => 'txtCURP'])
@@ -145,8 +150,8 @@
 
 
         <div id="spinner-overlay" style="display: none;">
-  <div class="spinner"></div>
-</div>
+            <div class="spinner"></div>
+        </div>
 
 
         @include('componentes.pie')
