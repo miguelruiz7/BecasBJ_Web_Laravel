@@ -34,11 +34,11 @@
     <link href="{{ asset('fontawesome/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ asset('fontawesome/css/brands.css') }}" rel="stylesheet">
     <link href="{{ asset('fontawesome/css/solid.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}?v={{ env('VERSION') }}" rel="stylesheet">
 
     <script src="{{ asset('jquery/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}?v={{ env('VERSION') }}"></script>
 
     <style>
         html,
