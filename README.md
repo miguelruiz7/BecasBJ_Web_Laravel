@@ -1,4 +1,4 @@
-# 📚 Portal Alternativo de Consulta de Becas Benito Juárez v1.1
+# 📚 Portal Alternativo de Consulta de Becas Benito Juárez versión alternativa (Laravel)
 
 > **⚠️ Aviso importante:**  
 > Este **NO es un sitio oficial del Gobierno de México**.  
