@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\CookieJar;
+
 
 class controladorBecas extends Controller
 {
@@ -72,7 +74,7 @@ class controladorBecas extends Controller
 
         $reglas = [
             'txtCURP' => 'required|min:18|max:18|validacurp|limitecurp',
-            'h-captcha-response' => 'required|validar_captcha'
+          /*   'h-captcha-response' => 'required|validar_captcha' */
         ];
 
 
@@ -116,6 +118,8 @@ class controladorBecas extends Controller
     $apoyos = catalogos::PROGRAMAS;
     $json = null;
 
+       $baseUrl = rtrim(env('BECAS_API_URL'), '/');
+
     try {
         if ($pruebas == 1) {
 
@@ -134,7 +138,7 @@ class controladorBecas extends Controller
 
             $modo = '(Pruebas)';
         } else {
-            $response = Http::asForm()->post('https://buscador.becasbenitojuarez.gob.mx/consulta/metodos/wrapper.php', [
+            $response = Http::asForm()->post($baseUrl, [
                 'CURP' => $curp,
                 'habilitar' => 1,
             ]);
@@ -144,8 +148,6 @@ class controladorBecas extends Controller
             }
 
 
-            
-
             $json = json_decode($response);
 
             if ($json === null || $response->body() === 'null' || $json->status === 422) {
@@ -154,6 +156,13 @@ class controladorBecas extends Controller
 
             $modo = '';
         }
+
+
+                    // Aquí llamamos a la función consultarCurp para obtener la info
+        $resultadoCurp = $this->consultarCurp($curp);
+
+          
+
 
         $emisionesPorAnio = $this->procesarEmisiones($json);
 
@@ -174,6 +183,7 @@ class controladorBecas extends Controller
                 'json' => $json,
                 'emisionesPorAnio' => $emisionesPorAnio,
                 'apoyos' => $apoyos,
+                'datos' => $resultadoCurp
             ])->render(),
             'mensaje' => 'Datos cargados exitosamente. ' . $modo,
         ]);
@@ -189,120 +199,110 @@ class controladorBecas extends Controller
 }
 
 
-    /**
-     * Procesa la información de emisiones de pagos del becario agrupándola por año y número de emisión.
-     *
-     * Esta función analiza las claves del objeto JSON recibido desde la API o archivo de prueba, 
-     * extrayendo información sobre fechas de pago, estatus, formas de entrega, etc., y organiza
-     * los datos en un arreglo estructurado por año y número de emisión.
-     *
-     * Maneja tanto las emisiones recientes (2023+, con formato estructurado) como casos especiales
-     * de 2021 y 2022 con nombres de clave atípicos.
-     *
-     * @param object $json Objeto JSON decodificado que contiene los datos del becario, 
-     *                     particularmente la propiedad `datos` con las emisiones.
-     *
-     * @return array Arreglo estructurado por año y número de emisión, con la información procesada.
-     * 
-     * @author Miguel Ruiz Zamora <miguelruizzamora7@gmail.com>
-     *
-     * Ejemplo de retorno:
-     * [
-     *     '2023' => [
-     *         1 => [
-     *             'FECHA_PAGO' => '2023-03-15',
-     *             'FORMA_ENTREGA_APOYO' => 'Banco X',
-     *             ...
-     *         ],
-     *         ...
-     *     ],
-     *     '2021' => [
-     *         1 => [
-     *             'FECHA_PAGO' => '2021-02-28',
-     *             'FORMA_ENTREGA_APOYO' => 'Banco Y',
-     *             ...
-     *         ]
-     *     ]
-     * ]
-     */
-    private function procesarEmisiones($json)
-    {
-        $emisionesPorAnio = [];
 
-        if (isset($json->datos) && $json->datos) {
-            foreach ($json->datos as $clave => $valor) {
-                // Casos normales: 2023+ (ej: FECHA_PAGO_25EMI2)
-                if (preg_match('/^(EMI(?:SION)?|FORMA_ENTREGA_APOYO|INSTITUCION_LIQUIDADORA|PAGADO|FECHA_PAGO|PERIODOS|ESTATUS_PAGO|EMISION_APOYO|FECHA_PROGRAMADA_SOT|DIR_PROGRAMADA_SOT)_?(\d{2})(?:EMI(?:SION)?)(\d)$/', $clave, $match)) {
-                    $tipo = $match[1];
-                    $anio = '20' . $match[2];
-                    $num = $match[3];
+ private function procesarEmisiones($json)
+{
+    $emisionesPorAnio = [];
 
-                    $emisionesPorAnio[$anio][$num][$tipo] = $valor;
-                    continue;
+    if (isset($json->datos) && $json->datos) {
+        foreach ($json->datos as $clave => $valor) {
+            // Casos normales: 2023+
+            if (preg_match('/^(EMI(?:SION)?|FORMA_ENTREGA_APOYO|INSTITUCION_LIQUIDADORA|PAGADO|FECHA_PAGO|PERIODOS|ESTATUS_PAGO|EMISION_APOYO|FECHA_PROGRAMADA_SOT|DIR_PROGRAMADA_SOT)_?(\d{2})(?:EMI(?:SION)?)(\d)$/', $clave, $match)) {
+                $tipo = $match[1];
+                $anio = '20' . $match[2];
+                $num = $match[3];
+
+                $emisionesPorAnio[$anio][$num][$tipo] = $valor;
+                continue;
+            }
+
+            // Casos especiales de 2021 y 2022
+            if (preg_match('/^FECHA_PAGO_(FEB|JUN|SEPOCT_2022)$/', $clave, $match)) {
+                $mesClave = $match[1];
+
+                if ($mesClave === 'FEB' || $mesClave === 'JUN') {
+                    $anio = '2021';
+                    $num = $mesClave === 'FEB' ? 1 : 2;
+                } elseif ($mesClave === 'SEPOCT_2022') {
+                    $anio = '2022';
+                    $num = 3;
                 }
 
-                // Casos especiales de 2021 y 2022
-                if (preg_match('/^FECHA_PAGO_(FEB|JUN|SEPOCT_2022)$/', $clave, $match)) {
-                    $mesClave = $match[1];
+                $fechaPago = $valor;
+                $formaEntrega = $json->datos->{"LIQUIDADORA_{$mesClave}"} ?? null;
+                $estatusPago = $json->datos->{"SITUACION_ENTREGA_{$mesClave}"} ?? null;
 
-                    if ($mesClave === 'FEB' || $mesClave === 'JUN') {
-                        $anio = '2021';
-                        $num = $mesClave === 'FEB' ? 1 : 2;
-                    } elseif ($mesClave === 'SEPOCT_2022') {
-                        $anio = '2022';
-                        $num = 3;
-                    }
-
-                    $emisionesPorAnio[$anio][$num]['FECHA_PAGO'] = $valor;
-                    $emisionesPorAnio[$anio][$num]['FORMA_ENTREGA_APOYO'] = $json->datos->{"LIQUIDADORA_{$mesClave}"} ?? null;
-                    $emisionesPorAnio[$anio][$num]['ESTATUS_PAGO'] = $json->datos->{"SITUACION_ENTREGA_{$mesClave}"} ?? null;
-                    continue;
+                // Solo guardar si hay al menos un dato no nulo o no vacío
+                if ($fechaPago || $formaEntrega || $estatusPago) {
+                    $emisionesPorAnio[$anio][$num]['FECHA_PAGO'] = $fechaPago;
+                    $emisionesPorAnio[$anio][$num]['FORMA_ENTREGA_APOYO'] = $formaEntrega;
+                    $emisionesPorAnio[$anio][$num]['ESTATUS_PAGO'] = $estatusPago;
                 }
+
+                continue;
             }
         }
-
-        return $emisionesPorAnio;
     }
 
-
-
-/* function consultarCurp(string $curp): array
-{
-    $url = "https://www.gob.mx/v1/renapoCURP/consulta";
-    $headers = [
-        'Host' => 'www.gob.mx',
-        'Accept' => 'application/json',
-        'Accept-Encoding' => 'gzip, deflate, br',
-        'Referer' => 'https://www.gob.mx/',
-        'Content-Type' => 'application/json',
-        'Connection' => 'keep-alive',
-    ];
-
-    $payload = [
-        "curp" => $curp,
-        "tipoBusqueda" => "curp"
-    ];
-
-    $client = new Client();
-
-    try {
-        $response = $client->post($url, [
-            'headers' => $headers,
-            'json' => $payload,
-        ]);
-
-        $data = json_decode($response->getBody(), true);
-
-        if (($data['codigo'] ?? '') !== "01") {
-            return ['success' => false, 'message' => $data['mensaje'] ?? 'Error desconocido'];
-        }
-
-        return ['success' => true, 'data' => $data['registros'][0] ?? null];
-
-    } catch (\Exception $e) {
-        return ['success' => false, 'message' => $e->getMessage()];
-    }
+    return $emisionesPorAnio;
 }
- */
+
+
+
+public function consultarCurp($curp)
+{
+    $curp = strtoupper($curp);
+
+
+    $baseUrl = rtrim(env('CURP_BASE_URL'), '/');
+    $registroPath = ltrim(env('CURP_REGISTRO_PATH'), '/');
+    $busquedaPath = ltrim(env('CURP_BUSQUEDA_PATH'), '/');
+
+
+    $perticionInicial = Http::withHeaders([
+        'User-Agent' => 'Mozilla/5.0',
+        'Accept' => '*/*',
+    ])->get("{$baseUrl}/{$registroPath}");
+
+
+    $cookies = $perticionInicial->cookies()->toArray();
+    $cadenaCookies = '';
+    foreach ($cookies as $cookie) {
+        $cadenaCookies .= $cookie['Name'] . '=' . $cookie['Value'] . '; ';
+    }
+
+  
+    $encabezados = [
+        'User-Agent' => 'Mozilla/5.0',
+        'Accept' => 'application/json, text/javascript, */*; q=0.01',
+        'Content-Type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Origin' => $baseUrl,
+        'Referer' => "{$baseUrl}/{$registroPath}",
+        'Cookie' => $cadenaCookies,
+    ];
+
+    $respuesta = Http::withHeaders($encabezados)->asForm()->post(
+        "{$baseUrl}/{$busquedaPath}",
+        [
+            'curp' => $curp,
+            'habilitar' => 1,
+        ]
+    );
+
+
+    $body = $respuesta->body();
+    $body = preg_replace('/^\x{FEFF}/u', '', $body);
+    $json = json_decode($body);
+
+    return $json;
+}
+
+
+
+
+
+
+
+
 
 }

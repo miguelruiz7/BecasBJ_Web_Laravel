@@ -7,6 +7,8 @@
 
         <p><strong>CURP del beneficiario: </strong> {{ $json->datos->CURP }}</p>
 
+        <p><strong>Nombre del beneficiario: </strong> {{$datos->data->consultarPorCurpOResult->nombres}} {{$datos->data->consultarPorCurpOResult->apellido1}} {{$datos->data->consultarPorCurpOResult->apellido2}}</p>
+
 
         @switch($json->datos->SITUACION_INSCRIPCION_ACTUAL)
             @case('ACTIVA')
