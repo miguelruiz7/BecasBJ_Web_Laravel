@@ -7,8 +7,17 @@
 
         <p><strong>CURP del beneficiario: </strong> {{ $json->datos->CURP }}</p>
 
-        <p><strong>Nombre del beneficiario: </strong> {{$datos->data->consultarPorCurpOResult->nombres}} {{$datos->data->consultarPorCurpOResult->apellido1}} {{$datos->data->consultarPorCurpOResult->apellido2}}</p>
+        @if (isset($datos->data->consultarPorCurpOResult))
+            <p><strong>Nombre del beneficiario: </strong> {{ $datos->data->consultarPorCurpOResult->nombres }}
+                {{ $datos->data->consultarPorCurpOResult->apellido1 }}
+                {{ $datos->data->consultarPorCurpOResult->apellido2 }}</p>
+        @endif
 
+        {{--  {{json_encode($escuela)}} --}}
+{{-- 
+        {{ $escuela->datos[0]->nombre }}
+
+ --}}
 
         @switch($json->datos->SITUACION_INSCRIPCION_ACTUAL)
             @case('ACTIVA')
@@ -55,6 +64,12 @@
                 <div id="divBecario" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <ul class="list-group list-group-flush">
+
+                             @if (isset($escuela->datos[0]->nombre))
+                                <li class="list-group-item"><strong>Nombre de la escuela: </strong>  {{$escuela->datos[0]->nombre}} </li>
+                             @endif 
+
+
                             @if (isset($json->datos->CCT))
                                 <li class="list-group-item"><strong>C.C.T: </strong> {{ $json->datos->CCT }} </li>
                             @endif
@@ -111,6 +126,72 @@
                     </div>
                 </div>
             </div>
+
+
+@if ($json->datos->PROGRAMA ==  'BASICA')
+                <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#divFamilia" aria-expanded="false" aria-controls="divFamilia">
+                        <i class="fa-solid fa-people-roof me-3"></i> Información familiar
+                    </button>
+                </h2>
+                <div id="divFamilia" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        @php
+                            $familia = $json->datos->DATOS_FAMILIA ?? [];
+                            $familia_normalizada = [];
+
+                            $tipos_persona = [
+                                '2' => 'Padre/Madre/Tutor',
+                                '1' => 'Becario',
+                                // Agrega más tipos si existen
+                            ];
+
+                            if (is_array($familia)) {
+                                foreach ($familia as $miembro) {
+                                    $familia_normalizada[] = (array) $miembro;
+                                }
+                            }
+                        @endphp
+
+                        @if (count($familia_normalizada) > 0)
+                            <div class="d-flex flex-column gap-3">
+                                @foreach ($familia_normalizada as $index => $persona)
+                                    <div class="card border-primary shadow-sm">
+                                        <div class="card-header bg-primary text-white">
+                                            <i class="fa-solid fa-user me-2"></i>Miembro {{ $index + 1 }}
+                                        </div>
+                                        <div class="card-body">
+                                            <p><strong>CURP:</strong> {{ $persona['CURP'] ?? 'N/A' }}</p>
+                                            <p><strong>CCT:</strong> {{ $persona['CCT'] ?: 'N/A' }}</p>
+                                            <p>
+                                                <strong>Tipo de Persona:</strong>
+                                                <span class="badge bg-info text-dark">
+                                                    {{ $tipos_persona[$persona['TIPO_PERSONA']] ?? 'Desconocido' }}
+                                                </span>
+                                            </p>
+                                            <p><strong>Familia:</strong> {{ $persona['FAMILIA'] ?? 'N/A' }}</p>
+                                            <p>
+                                                <strong>Becario Ancla:</strong>
+                                                @if (!empty($persona['BECARIO_ANCLA']))
+                                                    <span class="badge bg-success">Sí</span>
+                                                @else
+                                                    <span class="badge bg-secondary">No</span>
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-muted mb-0">No se encontró información de la familia.</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            @endif
 
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -369,15 +450,10 @@
 
                             if (is_object($historial_raw) && property_exists($historial_raw, 'MENSAJE')) {
                                 $mensaje = $historial_raw->MENSAJE;
-                            }
-                          
-                            elseif (is_array($historial_raw) && isset($historial_raw['MENSAJE'])) {
+                            } elseif (is_array($historial_raw) && isset($historial_raw['MENSAJE'])) {
                                 $mensaje = $historial_raw['MENSAJE'];
-                            }
-                         
-                            elseif (is_array($historial_raw)) {
+                            } elseif (is_array($historial_raw)) {
                                 foreach ($historial_raw as $item) {
-                                  
                                     if (is_array($item) && isset($item[0])) {
                                         $item = $item[0];
                                     }
@@ -400,14 +476,12 @@
                             }
                         @endphp
 
-             
+
                         @if ($mensaje)
-                          
-                              <p class="text-center"><strong>{{ $mensaje }}</strong></p>  
-                         
+                            <p class="text-center"><strong>{{ $mensaje }}</strong></p>
                         @endif
 
-                  
+
                         @if (count($historial_normalizado) > 0)
                             <ul class="list-group">
                                 @foreach ($historial_normalizado as $item)
@@ -433,6 +507,32 @@
             </div>
 
         </div>
+
+
+        <!-- Contenedor de baja -->
+
+
+
+
     </div>
+
+
+   @if(strtoupper($json->datos->SITUACION_INSCRIPCION_ACTUAL ?? '') === 'BAJA')
+<div class="card border-danger m-3" style="max-width: 100%;">
+    <div class="card-header bg-danger text-white">
+       <i class="fa-solid fa-triangle-exclamation"></i> <strong>{{ $json->datos->ETIQUETA_BAJA }}</strong>
+    </div>
+    <div class="card-body text-danger">
+    
+ 
+        <p class="card-text"><strong>Ejercicio fiscal de baja:</strong> {{ $json->datos->EJERCICIO_FISCAL_BAJA ?? 'N/D' }}</p>
+        <p class="card-text"><strong>Motivo:</strong> {{ $json->datos->EXPLICACION_MOTIVO_BAJA ?? 'N/D' }}</p>
+        <p class="card-text"><strong>Fundamentación:</strong> {{  $json->datos->FUNDAMENTACION ?? 'No disponible' }}</p>
+        <hr>
+  
+    </div>
+</div>
+@endif
+
 
 </div>

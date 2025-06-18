@@ -74,7 +74,7 @@ class controladorBecas extends Controller
 
         $reglas = [
             'txtCURP' => 'required|min:18|max:18|validacurp|limitecurp',
-          /*   'h-captcha-response' => 'required|validar_captcha' */
+            /* 'h-captcha-response' => 'required|validar_captcha' */
         ];
 
 
@@ -137,6 +137,9 @@ class controladorBecas extends Controller
             }
 
             $modo = '(Pruebas)';
+
+            $resultadoCurp = [];
+            $escuela = [];
         } else {
             $response = Http::asForm()->post($baseUrl, [
                 'CURP' => $curp,
@@ -155,26 +158,29 @@ class controladorBecas extends Controller
             }
 
             $modo = '';
+
+              $resultadoCurp = $this->consultarCurp($curp);
+              $escuela = $this->buscarEscuela($json->datos->CCT);
+
         }
 
 
-                    // Aquí llamamos a la función consultarCurp para obtener la info
-        $resultadoCurp = $this->consultarCurp($curp);
-
+                   
+      
           
 
 
         $emisionesPorAnio = $this->procesarEmisiones($json);
 
 
-           /*  if ($pruebas == 0) {
+            if ($pruebas == 0) {
                 // Guardar consulta
                 $registro = new query();
                 $registro->query_id = uniqid();
                 $registro->query_curp = $curp;
                 $registro->query_tmp = date('Y-m-d H:i:s');
                 $registro->save();
-            } */
+            }
 
 
         return response()->json([
@@ -183,7 +189,8 @@ class controladorBecas extends Controller
                 'json' => $json,
                 'emisionesPorAnio' => $emisionesPorAnio,
                 'apoyos' => $apoyos,
-                'datos' => $resultadoCurp
+                'datos' => $resultadoCurp,
+                'escuela' => $escuela
             ])->render(),
             'mensaje' => 'Datos cargados exitosamente. ' . $modo,
         ]);
@@ -300,6 +307,31 @@ public function consultarCurp($curp)
 
 
 
+
+public function buscarEscuela($CCT)
+{
+    $CCT = strtoupper($CCT);
+
+    $url = "https://api.siged.sep.gob.mx/CoreServices/servicios/escuela/buscaEscuela/cct={$CCT}&turno=&tipoedu=&nivel=&subnivel=&control=&subcontrol=&entidad=&municipio=&localidad=&primer=1&ultimo=1000";
+
+    $client = new Client();
+
+    try {
+        $response = $client->request('GET', $url, [
+            'verify' => false,
+        ]);
+
+        $body = $response->getBody();
+        $json = json_decode($body);
+
+        return $json;
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'No se pudo obtener la información de la escuela.',
+            'mensaje' => $e->getMessage(),
+        ], 500);
+    }
+}
 
 
 

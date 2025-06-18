@@ -15,8 +15,10 @@ Route::get('consulta', function () {
 
 
 Route::get('consultarCurp/{CURP}', [controladorBecas::class, 'consultarCurp']);
+Route::get('consultarEscuela/{CCT}', [controladorBecas::class, 'buscarEscuela']);
 
 Route::group(['prefix' => '/func',], function () {
     /* Plataforma */
     Route::post('consultar', [controladorBecas::class, 'consultaBeca']);
 });
+    
