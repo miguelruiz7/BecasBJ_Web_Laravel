@@ -1,3 +1,7 @@
+<script>
+aplicarModoSensible(localStorage.getItem('modo_sensible') === 'true');
+</script>
+
 <div class="card">
     <div class="card-header text-center">
         <img src="{{ asset('img/becaicons/' . $json->datos->PROGRAMA . '.jpg') }}"
@@ -5,19 +9,14 @@
 
         <p><strong>Programa: </strong> {{ $apoyos[$json->datos->PROGRAMA] }}</p>
 
-        <p><strong>CURP del beneficiario: </strong> {{ $json->datos->CURP }}</p>
+        <p><strong>CURP del beneficiario: </strong> <span class="datos-sensibles">{{ $json->datos->CURP }}</span></p>
 
         @if (isset($datos->data->consultarPorCurpOResult))
-            <p><strong>Nombre del beneficiario: </strong> {{ $datos->data->consultarPorCurpOResult->nombres }}
+            <p class="datos-sensibles"><strong>Nombre del beneficiario: </strong> {{ $datos->data->consultarPorCurpOResult->nombres }}
                 {{ $datos->data->consultarPorCurpOResult->apellido1 }}
                 {{ $datos->data->consultarPorCurpOResult->apellido2 }}</p>
         @endif
 
-        {{--  {{json_encode($escuela)}} --}}
-{{-- 
-        {{ $escuela->datos[0]->nombre }}
-
- --}}
 
         @switch($json->datos->SITUACION_INSCRIPCION_ACTUAL)
             @case('ACTIVA')
@@ -66,12 +65,12 @@
                         <ul class="list-group list-group-flush">
 
                              @if (isset($escuela->datos[0]->nombre))
-                                <li class="list-group-item"><strong>Nombre de la escuela: </strong>  {{$escuela->datos[0]->nombre}} </li>
+                                <li class="list-group-item"><strong>Nombre de la escuela: </strong>  <span class="datos-sensibles">{{$escuela->datos[0]->nombre}}</span> </li>
                              @endif 
 
 
                             @if (isset($json->datos->CCT))
-                                <li class="list-group-item"><strong>C.C.T: </strong> {{ $json->datos->CCT }} </li>
+                                <li class="list-group-item"><strong>C.C.T: </strong> <span class="datos-sensibles">{{ $json->datos->CCT }}</span> </li>
                             @endif
 
                             @if (isset($json->datos->PERIODO_INCORPORACION))
@@ -104,22 +103,22 @@
 
                             @if (isset($json->datos->DIRECCION_ADSCRIPCION))
                                 <li class="list-group-item"><strong>Dirección de adscripción: </strong>
-                                    {{ $json->datos->DIRECCION_ADSCRIPCION }} </li>
+                                   <span class="datos-sensibles"> {{ $json->datos->DIRECCION_ADSCRIPCION }}</span> </li>
                             @endif
 
                             @if (isset($json->datos->FECHA_NACIMIENTO))
                                 <li class="list-group-item"><strong>Fecha de nacimiento: </strong>
-                                    {{ $json->datos->FECHA_NACIMIENTO }} </li>
+                                    <span class="datos-sensibles">{{ $json->datos->FECHA_NACIMIENTO }}</span></li>
                             @endif
 
                             @if (isset($json->datos->INTEGRANTE_ID))
                                 <li class="list-group-item"><strong>Identificador de beneficiario: </strong>
-                                    {{ $json->datos->INTEGRANTE_ID }} </li>
+<span class="datos-sensibles">{{ $json->datos->INTEGRANTE_ID }}</span> </li>
                             @endif
 
                             @if (isset($json->datos->CURP_TUTOR))
                                 <li class="list-group-item"><strong>CURP del tutor: </strong>
-                                    {{ $json->datos->CURP_TUTOR }} </li>
+                                    <span class="datos-sensibles">{{ $json->datos->CURP_TUTOR }}</span></li>
                             @endif
 
                         </ul>
@@ -163,15 +162,15 @@
                                             <i class="fa-solid fa-user me-2"></i>Miembro {{ $index + 1 }}
                                         </div>
                                         <div class="card-body">
-                                            <p><strong>CURP:</strong> {{ $persona['CURP'] ?? 'N/A' }}</p>
-                                            <p><strong>CCT:</strong> {{ $persona['CCT'] ?: 'N/A' }}</p>
+                                            <p><strong>CURP:</strong> <span class="datos-sensibles">{{ $persona['CURP'] ?? 'N/A' }}</span></p>
+                                            <p><strong>CCT:</strong> <span class="datos-sensibles">{{ $persona['CCT'] ?: 'N/A' }}</span></p>
                                             <p>
                                                 <strong>Tipo de Persona:</strong>
-                                                <span class="badge bg-info text-dark">
+                                                <span class="datos-sensibles badge bg-info text-dark">
                                                     {{ $tipos_persona[$persona['TIPO_PERSONA']] ?? 'Desconocido' }}
                                                 </span>
                                             </p>
-                                            <p><strong>Familia:</strong> {{ $persona['FAMILIA'] ?? 'N/A' }}</p>
+                                            <p><strong>Familia:</strong> <span class="datos-sensibles">{{ $persona['FAMILIA'] ?? 'N/A' }}</span></p>
                                             <p>
                                                 <strong>Becario Ancla:</strong>
                                                 @if (!empty($persona['BECARIO_ANCLA']))

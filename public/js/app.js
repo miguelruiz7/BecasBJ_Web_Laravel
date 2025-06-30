@@ -1,20 +1,63 @@
- document.addEventListener('DOMContentLoaded', function () {
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Enter") {
-                const tag = event.target.tagName.toLowerCase();
-                if (tag !== 'textarea' && tag !== 'button') {
-                    event.preventDefault();
-                }
-            }
-        });
+document.addEventListener('DOMContentLoaded', function () {
 
-        const curpInput = document.getElementById('txtCURP');
-        if (curpInput) {
-            curpInput.addEventListener('input', function(e) {
-                e.target.value = e.target.value.toUpperCase();
-            });
+    const html = document.documentElement;
+
+    // 🌙 Control de tema oscuro
+    const toggle = document.getElementById('themeToggle');
+    if (toggle) {
+        const temaGuardado = localStorage.getItem('theme') === 'dark';
+        toggle.checked = temaGuardado;
+        html.setAttribute('data-bs-theme', temaGuardado ? 'dark' : 'light');
+
+        toggle.addEventListener('change', () => {
+            const modo = toggle.checked ? 'dark' : 'light';
+            html.setAttribute('data-bs-theme', modo);
+            localStorage.setItem('theme', modo);
+        });
+    }
+
+    // ⛔ Bloquear Enter excepto en textarea y button
+    document.addEventListener('keydown', function (event) {
+        if (event.key === "Enter") {
+            const tag = event.target.tagName.toLowerCase();
+            if (tag !== 'textarea' && tag !== 'button') {
+                event.preventDefault();
+            }
         }
     });
+
+    // 🔠 CURP en mayúsculas
+    const curpInput = document.getElementById('txtCURP');
+    if (curpInput) {
+        curpInput.addEventListener('input', function (e) {
+            e.target.value = e.target.value.toUpperCase();
+        });
+    }
+
+    // 🔒 Control de datos sensibles
+    const chkSensible = document.getElementById('sensibleData');
+    if (chkSensible) {
+        const modoActivo = localStorage.getItem('modo_sensible') === 'true';
+        chkSensible.checked = modoActivo;
+        aplicarModoSensible(modoActivo);
+
+        chkSensible.addEventListener('change', () => {
+            localStorage.setItem('modo_sensible', chkSensible.checked);
+            aplicarModoSensible(chkSensible.checked);
+        });
+    }
+
+});
+
+// 🎯 Función para aplicar el modo sensible
+function aplicarModoSensible(activar) {
+    const datosSensibles = document.querySelectorAll('.datos-sensibles');
+    datosSensibles.forEach(dato => {
+        dato.style.filter = activar ? 'blur(5px)' : 'none';
+    });
+}
+
+
 
 /**
  * Carga una página o contenido dinámicamente en un contenedor específico del DOM.
@@ -498,3 +541,5 @@ function erroresPagina(codigo) {
     function recargarCaptcha() {
         hcaptcha.reset();
     }
+
+

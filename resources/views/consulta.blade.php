@@ -93,6 +93,26 @@
                     consultas por día, asi que usa sabiamente</p>
             </div>
             <div class="card-body">
+                <div class="text-end mb-3" style="display: flex; gap: 5%; flex-wrap: nowrap; justify-content: center;">
+    <div class="form-check form-switch" style="display: flex; flex-direction: row;">
+        <input class="form-check-input" type="checkbox" id="themeToggle" style="margin-right: 1vh;">
+        <label class="form-check-label" for="themeToggle">Modo oscuro</label>
+    </div>
+    <div class="form-check form-switch" style="display: flex; flex-direction: row;">
+        <input class="form-check-input" type="checkbox" id="sensibleData" style="margin-right: 1vh;">
+        <label class="form-check-label" for="sensibleData">Ocultar datos sensibles</label>
+    </div>
+</div>
+
+
+
+<style>
+.datos-sensibles {
+    transition: filter 0.3s ease;
+}
+</style>
+
+
                 <form id="consultar">
 
 
@@ -102,7 +122,7 @@
                         <div class="input-group  rounded-3">
                             <span class="input-group-text" id="basic-addon3"><i id="iconFormularios"
                                     class="fa-solid fa-address-card"></i></span>
-                            <input class="form-control" name="txtCURP" id="txtCURP" type="text"
+                            <input class="form-control datos-sensibles" name="txtCURP" id="txtCURP" type="text"
                                 pattern="^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]\d$"
                                 title="Formato CURP inválido. Ejemplo: GODE561231HDFABC09" maxlength="18"
                                 minlength="18">
